@@ -2,134 +2,110 @@
 A console based application made for ticket booking of buses.
 
 
-# 🚍 Bus Management System (Java + MySQL)
 
-This is a simple **Java console application** for managing a bus booking system. It provides two main portals:
+# 🚌 XYZ Bus Service Management System
 
-Operator Portal – for managing bus details (CRUD operations).
-* **Passenger Portal** – for booking, cancelling, and viewing tickets.
+This is a simple **Java-based Bus Management System** that allows **operators** to manage buses and **customers** to book or cancel tickets using a MySQL backend. It provides two portals:
 
-### 📌 Features
+* **Operator Portal** – Add, update, delete, or view buses.
+* **Customer Portal** – Book tickets, cancel tickets, view bus details.
 
-#### 👨‍💼 Operator Portal
+## 📁 Features
+
+### Operator Portal:
 
 * View bus details
 * Add a new bus
 * Delete a bus
-* Update:
+* Update journey date, capacity, availability, starting/ending points
 
-  * Journey Date
-  * Capacity
-  * Available seats
-  * Starting Point
-  * Ending Point
-
-#### 🧑‍💼 Passenger Portal
+### Customer Portal:
 
 * Book a ticket
 * Cancel a ticket
-* View bus details
+* View available buses
 
----
+## 💻 Technologies Used
 
-## 🛠️ Technologies Used
+* Java
+* JDBC (Java Database Connectivity)
+* MySQL
 
-* **Java**
-* **MySQL**
-* **JDBC API**
+## 🛠️ Prerequisites
 
----
+* Java JDK 8 or above
+* MySQL server installed and running
+* MySQL JDBC Driver (`mysql-connector-java`)
 
-## 📋 Database Schema
+## 📦 Database Schema
 
-### Table: `BUSES`
+```sql
+CREATE DATABASE xyzbusez;
 
-| Column        | Type              |
-| ------------- | ----------------- |
-| BUSNO         | INT (Primary Key) |
-| JRNYDATE      | DATE              |
-| CAPACITY      | INT               |
-| AVAILABLE     | INT               |
-| SPOINT        | VARCHAR(50)       |
-| ENDING\_POINT | VARCHAR(50)       |
+USE xyzbusez;
 
-### Table: `PASSENGER`
+CREATE TABLE BUSES (
+  BUSNO INT PRIMARY KEY,
+  JRNYDATE DATE,
+  CAPACITY INT,
+  AVAILABLE INT,
+  SPOINT VARCHAR(100),
+  ENDING_POINT VARCHAR(100)
+);
 
-| Column           | Type              |
-| ---------------- | ----------------- |
-| PASSID           | INT (Primary Key) |
-| NAME             | VARCHAR(100)      |
-| DATE\_BOOKED     | DATE              |
-| AMOUNT           | INT               |
-| BUSNO            | INT (Foreign Key) |
-| STARTINGPOINT    | VARCHAR(50)       |
-| DESTINATIONPOINT | VARCHAR(50)       |
+CREATE TABLE PASSENGER (
+  PASSID INT PRIMARY KEY,
+  NAME VARCHAR(100),
+  DATE_BOOKED DATE,
+  AMOUNT INT,
+  BUSNO INT,
+  STARTINGPOINT VARCHAR(100),
+  DESTINATIONPOINT VARCHAR(100),
+  FOREIGN KEY (BUSNO) REFERENCES BUSES(BUSNO)
+);
+```
 
----
+## 🚀 How to Run
 
-## 🔧 Setup Instructions
+### 1. Clone the Repository
 
-### ✅ Prerequisites
+```bash
+git clone https://github.com/SahilYadav18/XYZ-BUS-SERVICE.git
+cd XYZ-BUS-SERVICE
+```
 
-* Java 8 or higher
-* MySQL installed and running
-* MySQL JDBC Driver (e.g., `mysql-connector-java`)
-* IDE like IntelliJ IDEA / Eclipse or just use command line
+### 2. Configure MySQL Credentials
 
-### 📂 Steps
+Update your `Main.java` file with correct database credentials:
 
-1. **Clone the repository**
+```java
+public static final String URL = "jdbc:mysql://localhost:3306/xyzbusez";
+public static final String username = "root";
+public static final String password = "Root";
+```
 
-   ```bash
-   git clone https://github.com/your-username/bus-management-system.git
-   cd bus-management-system
-   ```
+### 3. Compile and Run
 
-2. **Setup MySQL**
+Make sure you add the MySQL JDBC driver to your classpath.
 
-   * Create the database:
+```bash
+javac Main.java
+java Main
+```
 
-     ```sql
-     CREATE DATABASE xyzbusez;
-     USE xyzbusez;
-     ```
-   * Create the `BUSES` and `PASSENGER` tables using the schema above.
+Or use your IDE (Eclipse, IntelliJ, etc.) to run the `Main` class.
 
-3. **Configure DB Credentials**
+## 🧪 Sample Data
 
-   * In the `Main.java` file, update the following constants:
-
-     ```java
-     public static final String URL = "jdbc:mysql://localhost:3306/xyzbusez";
-     public static final String username = "your_mysql_username";
-     public static final String password = "your_mysql_password";
-     ```
-
-4. **Compile and Run the Project**
-
-   ```bash
-   javac Main.java
-   java Main
-   ```
-
----
-
-## 📸 Screenshots
-
-> You can add CLI screenshots here to show how it works.
-
----
+```sql
+INSERT INTO BUSES VALUES (101, '2025-06-15', 50, 50, 'Delhi', 'Lucknow');
+INSERT INTO BUSES VALUES (102, '2025-06-20', 40, 40, 'Mumbai', 'Pune');
+```
 
 ## 📄 License
 
-This project is open-source and available under the [MIT License](LICENSE).
+This project is open-source and free to use.
 
 ---
 
-## 🤝 Contribution
 
-Pull requests and suggestions are welcome! Feel free to fork the repository and make changes.
-
----
-
-Let me know if you'd like me to include sample SQL for table creation too.
